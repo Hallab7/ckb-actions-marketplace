@@ -81,8 +81,23 @@ fn verify_task_transition() -> Result<(), Error> {
     let _poster_lock_hash = &args[POSTER_HASH_OFFSET..POSTER_HASH_OFFSET + 32];
     let reviewer_lock_hash = &args[REVIEWER_HASH_OFFSET..REVIEWER_HASH_OFFSET + 32];
 
-    // Load input and output cell data
-    let input_data = load_cell_data(0, Source::GroupInput).map_err(Error::from)?;
+    // Load input cell data — if no input group cell, this is a creation transaction
+    let input_data = match load_cell_data(0, Source::GroupInput) {
+        Ok(data) => data,
+        Err(ckb_std::error::SysError::IndexOutOfBound) => {
+            // Creation: no input task cell. Validate the output is a valid open task.
+            let output_data = load_cell_data(0, Source::GroupOutput).map_err(Error::from)?;
+            if output_data.len() < MIN_DATA_LEN {
+                return Err(Error::InvalidDataLength);
+            }
+            if output_data[STATUS_OFFSET] != STATUS_OPEN {
+                return Err(Error::InvalidTransition);
+            }
+            return Ok(());
+        }
+        Err(e) => return Err(Error::from(e)),
+    };
+
     let output_data = load_cell_data(0, Source::GroupOutput).map_err(Error::from)?;
 
     if input_data.len() < MIN_DATA_LEN || output_data.len() < MIN_DATA_LEN {

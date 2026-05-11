@@ -1,0 +1,30 @@
+{
+  "cell_recipes": [
+    {
+      "name": "task-type",
+      "tx_hash": "0x85db3ca938d0560607429520c4af0212262be822961eec8b9b125bcb180c84f0",
+      "index": 0,
+      "occupied_capacity": 4339800000000,
+      "data_hash": "0xa822599c782183f8dc23b058eedfa580c5851061d3436f68d6f8bf011fb5dafe",
+      "type_id": "0xe0bae6939fb325ce18631945cb01a3ed206206aa866126fa5144190fde02d902"
+    },
+    {
+      "name": "task-lock",
+      "tx_hash": "0x8348906af6f43f7da56bd35e1765c3f577e6194c0b95595f4e87188e9d27214c",
+      "index": 1,
+      "occupied_capacity": 4295800000000,
+      "data_hash": "0xc8c01f16206b970e6950dbbe0ff642ff61c15dc895b9be02ad5bdbc365829349",
+      "type_id": "0xf14fb9cb20a79ad141547c2c0054fcd5ed6f8b3556c80f02f3efbd4e270b87e0"
+    }
+  ],
+  "dep_group_recipes": [
+    {
+      "name": "ckb-actions-dep-group",
+      "tx_hash": "0x03d149bf6ac5d9fcf19ad67c49cd9c41abe64d4312f74bf19f01a6a5d3659d1a",
+      "index": 0,
+      "data_hash": "0x8c12c1ffd12b5279c5e5d4f1d57a015f2e67567a35af94f7a41f894bc54a163b",
+      "occupied_capacity": 13700000000,
+      "type_id": null
+    }
+  ]
+}
