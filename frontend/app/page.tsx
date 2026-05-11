@@ -1,16 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { TaskCard } from "@/components/TaskCard";
 import { StatsBar } from "@/components/StatsBar";
 import { TaskStatus } from "@/lib/types";
 import { useTasks } from "@/hooks/useTasks";
-import Link from "next/link";
 
 const FILTERS: { label: string; value: TaskStatus | "all" }[] = [
   { label: "All", value: "all" },
   { label: "Open", value: "open" },
-  { label: "Claimed", value: "claimed" },
+  { label: "Accepted", value: "claimed" },
   { label: "Under Review", value: "submitted" },
   { label: "Completed", value: "completed" },
 ];
@@ -31,40 +31,78 @@ export default function Home() {
 
   return (
     <div>
-      {/* Hero */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-1">
-          Task Marketplace
-        </h1>
-        <p className="text-gray-500 text-sm">
-          Earn CKB by completing on-chain tasks. Rewards are escrowed in cells —
-          no platform holds your funds.
-        </p>
+      <div className="mb-8 grid items-center gap-8 lg:grid-cols-[0.92fr_1.08fr]">
+        <section className="space-y-6">
+          <div className="inline-flex items-center gap-2 rounded-full border p-1 pr-4 text-sm text-secondary" style={{ borderColor: "var(--border)", background: "var(--surface-muted)" }}>
+            <span className="signal-pill rounded-full px-3 py-1.5 text-xs font-bold">Live testnet</span>
+            Escrowed CKB work market
+          </div>
+          <div>
+            <h1 className="max-w-2xl text-4xl font-semibold leading-[1.02] tracking-normal text-primary sm:text-5xl lg:text-6xl">
+              A production dashboard for <span className="gradient-text">on-chain action flows.</span>
+            </h1>
+            <p className="mt-5 max-w-xl text-base leading-8 text-secondary">
+              Discover, create, accept, and settle CKB-backed tasks from one responsive marketplace. Rewards are locked in cells and released only through the contract workflow.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Link href="/post" className="primary-button gap-2 px-6 text-sm">
+              Create Task
+              <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M7 17 17 7M9 7h8v8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </Link>
+            <Link href="/dashboard" className="secondary-button px-6 text-sm font-semibold">
+              View Dashboard
+            </Link>
+          </div>
+        </section>
+
+        <section className="cube-stage rounded-[32px] border p-6" style={{ borderColor: "var(--border)", background: "radial-gradient(circle at 72% 24%, rgba(109,40,217,0.3), transparent 28%), radial-gradient(circle at 32% 78%, rgba(34,211,238,0.16), transparent 32%), var(--surface-muted)" }}>
+          <div className="absolute left-6 top-6 rounded-full border px-3 py-1 text-xs font-semibold text-secondary" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>CKBind network surface</div>
+          <div className="absolute right-6 top-6 flex items-center gap-2 text-xs text-muted">
+            <span className="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(34,211,238,0.9)]" />
+            Synced
+          </div>
+          <div className="cube-scene" aria-hidden="true">
+            {["alpha", "beta", "gamma", "delta"].map((name) => (
+              <div key={name} className={`cube-float cube-${name}`}>
+                <div className="cube3d">
+                  <span className="cube-face cube-front" />
+                  <span className="cube-face cube-back" />
+                  <span className="cube-face cube-right" />
+                  <span className="cube-face cube-left" />
+                  <span className="cube-face cube-top" />
+                  <span className="cube-face cube-bottom" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
 
       <StatsBar tasks={tasks} />
 
-      {/* Search + Filter */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
+      <div className="mb-6 flex flex-col gap-3 rounded-3xl border p-3 sm:flex-row" style={{ borderColor: "var(--border)", background: "var(--surface-muted)" }}>
         <div className="relative flex-1">
-          <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          <svg className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.7} d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
           </svg>
           <input
             type="text"
             placeholder="Search tasks..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-white focus:outline-none focus:border-gray-400 placeholder-gray-400"
+            className="input pl-11"
           />
         </div>
-        <div className="flex gap-1 bg-white border border-gray-200 rounded-lg p-1">
+        <div className="flex gap-1 overflow-x-auto rounded-2xl border p-1" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
           {FILTERS.map((f) => (
             <button
               key={f.value}
               onClick={() => setFilter(f.value)}
-              className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
-                filter === f.value ? "bg-gray-900 text-white" : "text-gray-500 hover:text-gray-900"
+              className={`shrink-0 rounded-full px-3 py-2 text-xs font-semibold ${
+                filter === f.value ? "active-pill text-primary" : "text-muted hover:text-primary"
               }`}
             >
               {f.label}
@@ -73,49 +111,46 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Error banner */}
       {error && (
-        <div className="mb-4 px-4 py-3 bg-amber-50 border border-amber-200 rounded-lg text-amber-700 text-sm flex items-center justify-between">
+        <div className="mb-4 flex items-center justify-between rounded-2xl border border-amber-400/30 bg-amber-400/10 px-4 py-3 text-sm text-amber-600 dark:text-amber-200">
           <span>{error} Showing cached data.</span>
-          <button onClick={refetch} className="text-xs underline">Retry</button>
+          <button onClick={refetch} className="text-xs font-semibold underline">Retry</button>
         </div>
       )}
 
-      {/* Task Grid */}
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="bg-white border border-gray-200 rounded-xl p-5 animate-pulse">
-              <div className="h-4 bg-gray-100 rounded w-3/4 mb-3" />
-              <div className="h-3 bg-gray-100 rounded w-full mb-2" />
-              <div className="h-3 bg-gray-100 rounded w-2/3 mb-4" />
+            <div key={i} className="card animate-pulse rounded-3xl p-5">
+              <div className="mb-3 h-4 w-3/4 rounded bg-zinc-500/10" />
+              <div className="mb-2 h-3 w-full rounded bg-zinc-500/10" />
+              <div className="mb-4 h-3 w-2/3 rounded bg-zinc-500/10" />
               <div className="flex justify-between">
-                <div className="h-4 bg-gray-100 rounded w-16" />
-                <div className="h-4 bg-gray-100 rounded w-20" />
+                <div className="h-4 w-16 rounded bg-zinc-500/10" />
+                <div className="h-4 w-20 rounded bg-zinc-500/10" />
               </div>
             </div>
           ))}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="text-center py-16 text-gray-400">
-          <p className="text-sm">No tasks found.</p>
+        <div className="card rounded-3xl py-16 text-center text-muted">
+          <p className="text-sm font-medium">No tasks found.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {filtered.map((task) => (
             <TaskCard key={`${task.outPoint.txHash}-${task.outPoint.index}`} task={task} />
           ))}
         </div>
       )}
 
-      {/* Post CTA */}
-      <div className="mt-12 bg-gray-900 rounded-2xl p-8 text-center">
-        <h2 className="text-white font-semibold text-lg mb-2">Have a task to get done?</h2>
-        <p className="text-gray-400 text-sm mb-5">
-          Post a task and lock your reward on-chain. Pay only when the work is done.
+      <div className="mt-12 rounded-[32px] border p-8 text-center" style={{ borderColor: "var(--border)", background: "linear-gradient(135deg, rgba(168,85,247,0.22), rgba(236,72,153,0.16)), var(--surface-muted)" }}>
+        <h2 className="mb-2 text-lg font-bold text-primary">Have a task to get done?</h2>
+        <p className="mb-5 text-sm text-secondary">
+          Create a task and lock your reward on-chain. Pay only when the work is done.
         </p>
-        <Link href="/post" className="inline-block bg-white text-gray-900 text-sm font-medium px-5 py-2 rounded-lg hover:bg-gray-100 transition-colors">
-          Post a Task
+        <Link href="/post" className="primary-button px-6 text-sm">
+          Create Task
         </Link>
       </div>
     </div>

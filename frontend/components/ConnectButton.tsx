@@ -24,14 +24,14 @@ export function ConnectButton() {
 
   if (address) {
     return (
-      <div className="flex items-center gap-2">
-        <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block" />
-        <span className="text-sm text-gray-700 font-mono hidden sm:block">
+      <div className="flex items-center gap-2 rounded-full border px-3 py-2" style={{ borderColor: "var(--border)", background: "var(--surface-muted)" }}>
+        <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,0.65)]" />
+        <span className="hidden font-mono text-xs text-secondary sm:block">
           {short}
         </span>
         <button
           onClick={disconnect}
-          className="text-xs text-gray-400 hover:text-gray-700 transition-colors"
+          className="text-xs font-medium text-muted hover:text-primary"
         >
           Disconnect
         </button>
@@ -42,7 +42,7 @@ export function ConnectButton() {
   return (
     <button
       onClick={open}
-      className="text-sm font-medium px-4 py-1.5 rounded-md border border-gray-300 bg-white text-gray-700 hover:border-gray-400 hover:bg-gray-50 transition-colors"
+      className="secondary-button px-4 text-sm font-semibold"
     >
       Connect Wallet
     </button>

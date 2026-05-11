@@ -8,18 +8,19 @@ export function StatsBar({ tasks }: { tasks: Task[] }) {
   const completed = tasks.filter((t) => t.status === "completed").length;
 
   const stats = [
-    { label: "Open Tasks", value: open.toString() },
-    { label: "CKB Available", value: shannonsToCKB(totalReward) },
-    { label: "Completed", value: completed.toString() },
-    { label: "Total Tasks", value: tasks.length.toString() },
+    { label: "Open Tasks", value: open.toString(), tone: "from-emerald-400 to-cyan-300" },
+    { label: "CKB Available", value: shannonsToCKB(totalReward), tone: "from-fuchsia-400 to-violet-400" },
+    { label: "Completed", value: completed.toString(), tone: "from-violet-300 to-sky-300" },
+    { label: "Total Tasks", value: tasks.length.toString(), tone: "from-orange-300 to-pink-400" },
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-4 lg:gap-4">
       {stats.map((s) => (
-        <div key={s.label} className="bg-white border border-gray-200 rounded-xl p-4">
-          <p className="text-2xl font-semibold text-gray-900">{s.value}</p>
-          <p className="text-xs text-gray-500 mt-0.5">{s.label}</p>
+        <div key={s.label} className="card relative overflow-hidden rounded-3xl p-4">
+          {/* <div className={`absolute right-4 top-4 h-10 w-10 rounded-2xl bg-gradient-to-br ${s.tone} opacity-80 blur-[1px]`} /> */}
+          <p className="relative text-2xl font-bold text-primary">{s.value}</p>
+          <p className="relative mt-1 text-xs font-medium uppercase tracking-[0.16em] text-muted">{s.label}</p>
         </div>
       ))}
     </div>

@@ -13,7 +13,7 @@ export const STATUS_DISPUTED = 4;
 
 export const STATUS_LABELS: Record<TaskStatus, string> = {
   open: "Open",
-  claimed: "Claimed",
+  claimed: "Accepted",
   submitted: "Under Review",
   completed: "Completed",
   disputed: "Disputed",

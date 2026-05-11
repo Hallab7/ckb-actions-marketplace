@@ -9,8 +9,8 @@ import { MOCK_TASKS } from "@/lib/mock-data";
 import { SCRIPTS_DEPLOYED } from "@/lib/scripts";
 
 const TABS = [
-  { id: "posted", label: "Posted by me" },
-  { id: "claimed", label: "Claimed by me" },
+  { id: "posted", label: "Created by me" },
+  { id: "claimed", label: "Accepted by me" },
 ];
 
 export default function DashboardPage() {
@@ -64,10 +64,10 @@ export default function DashboardPage() {
 
   if (!address) {
     return (
-      <div className="text-center py-24">
-        <p className="text-gray-500 text-sm mb-4">Connect your wallet to view your dashboard.</p>
+      <div className="card mx-auto max-w-xl rounded-[32px] px-6 py-20 text-center">
+        <p className="mb-4 text-sm text-secondary">Connect your wallet to view your dashboard.</p>
         <button onClick={open}
-          className="bg-gray-900 text-white text-sm font-medium px-5 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+          className="primary-button px-6 text-sm">
           Connect Wallet
         </button>
       </div>
@@ -76,32 +76,36 @@ export default function DashboardPage() {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-1">Dashboard</h1>
-        <p className="text-xs text-gray-400 font-mono">{address}</p>
+      <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+        <div>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-muted">Operator console</p>
+          <h1 className="text-3xl font-semibold text-primary md:text-5xl">Dashboard</h1>
+          <p className="mt-3 max-w-2xl truncate font-mono text-xs text-muted">{address}</p>
+        </div>
+        <div className="rounded-full border px-4 py-2 text-sm font-semibold text-secondary" style={{ borderColor: "var(--border)", background: "var(--surface-muted)" }}>
+          Testnet account
+        </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-4 lg:gap-4">
         {[
-          { label: "Tasks Posted", value: posted.length.toString() },
-          { label: "Tasks Claimed", value: claimed.length.toString() },
+          { label: "Tasks Created", value: posted.length.toString() },
+          { label: "Tasks Accepted", value: claimed.length.toString() },
           { label: "CKB Locked", value: `${totalLocked.toFixed(0)} CKB` },
           { label: "CKB Earned", value: `${totalEarned.toFixed(0)} CKB` },
         ].map((s) => (
-          <div key={s.label} className="bg-white border border-gray-200 rounded-xl p-4">
-            <p className="text-2xl font-semibold text-gray-900">{s.value}</p>
-            <p className="text-xs text-gray-500 mt-0.5">{s.label}</p>
+          <div key={s.label} className="card rounded-3xl p-4">
+            <p className="text-2xl font-bold text-primary">{s.value}</p>
+            <p className="mt-1 text-xs font-medium uppercase tracking-[0.16em] text-muted">{s.label}</p>
           </div>
         ))}
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-1 bg-gray-100 rounded-lg p-1 w-fit mb-6">
+      <div className="mb-6 flex w-fit gap-1 rounded-full border p-1" style={{ borderColor: "var(--border)", background: "var(--surface-muted)" }}>
         {TABS.map((t) => (
           <button key={t.id} onClick={() => setTab(t.id)}
-            className={`px-4 py-1.5 rounded-md text-sm font-medium transition-colors ${
-              tab === t.id ? "bg-white text-gray-900 shadow-sm" : "text-gray-500 hover:text-gray-700"
+            className={`rounded-full px-4 py-2 text-sm font-semibold ${
+              tab === t.id ? "active-pill" : "text-muted hover:text-primary"
             }`}>
             {t.label}
           </button>
@@ -109,21 +113,21 @@ export default function DashboardPage() {
       </div>
 
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {[...Array(2)].map((_, i) => (
-            <div key={i} className="bg-white border border-gray-200 rounded-xl p-5 animate-pulse">
-              <div className="h-4 bg-gray-100 rounded w-3/4 mb-3" />
-              <div className="h-3 bg-gray-100 rounded w-full mb-4" />
-              <div className="h-4 bg-gray-100 rounded w-1/3" />
+            <div key={i} className="card animate-pulse rounded-3xl p-5">
+              <div className="mb-3 h-4 w-3/4 rounded bg-zinc-500/10" />
+              <div className="mb-4 h-3 w-full rounded bg-zinc-500/10" />
+              <div className="h-4 w-1/3 rounded bg-zinc-500/10" />
             </div>
           ))}
         </div>
       ) : tasks.length === 0 ? (
-        <div className="text-center py-16 text-gray-400">
+        <div className="card rounded-3xl py-16 text-center text-muted">
           <p className="text-sm">No tasks here yet.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {tasks.map((task) => (
             <TaskCard key={`${task.outPoint.txHash}-${task.outPoint.index}`} task={task} />
           ))}

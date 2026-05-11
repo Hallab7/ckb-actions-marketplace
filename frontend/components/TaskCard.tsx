@@ -7,31 +7,28 @@ export function TaskCard({ task }: { task: Task }) {
 
   return (
     <Link href={`/tasks/${encodeURIComponent(id)}`}>
-      <div className="bg-white border border-gray-200 rounded-xl p-5 hover:border-gray-300 hover:shadow-sm transition-all cursor-pointer group">
-        {/* Header */}
-        <div className="flex items-start justify-between gap-3 mb-3">
-          <h3 className="font-medium text-gray-900 text-sm leading-snug group-hover:text-gray-700 line-clamp-2">
+      <div className="card group cursor-pointer rounded-3xl p-5 hover:-translate-y-0.5 hover:border-fuchsia-400/30 hover:shadow-[0_22px_70px_rgba(168,85,247,0.18)]">
+        <div className="mb-4 flex items-start justify-between gap-3">
+          <h3 className="line-clamp-2 text-sm font-semibold leading-snug text-primary group-hover:text-fuchsia-500">
             {task.title}
           </h3>
           <StatusBadge status={task.status} />
         </div>
 
-        {/* Description */}
-        <p className="text-gray-500 text-xs leading-relaxed line-clamp-2 mb-4">
+        <p className="mb-5 line-clamp-3 text-xs leading-relaxed text-secondary">
           {task.description}
         </p>
 
-        {/* Footer */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-1">
-            <span className="text-gray-900 font-semibold text-sm">
+            <span className="text-lg font-bold text-primary">
               {shannonsToCKB(task.reward)}
             </span>
-            <span className="text-gray-400 text-xs">CKB</span>
+            <span className="text-xs font-semibold text-muted">CKB</span>
           </div>
-          <div className="flex items-center gap-1 text-gray-400 text-xs">
-            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <div className="flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs text-muted" style={{ borderColor: "var(--border)", background: "var(--surface-muted)" }}>
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.7} d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
             Block {task.deadline.toString()}
           </div>
