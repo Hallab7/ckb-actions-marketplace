@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ConnectButton } from "./ConnectButton";
@@ -66,62 +67,13 @@ export function Navbar() {
 
 function LogoMark() {
   return (
-    <div
-  className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-[18px] border"
-  style={{
-    borderColor: "rgba(255,255,255,0.08)",
-    background:
-      "linear-gradient(145deg, rgba(37,99,235,0.95), rgba(6,182,212,0.88))",
-    boxShadow: "0 14px 34px rgba(37,99,235,0.24)",
-  }}
->
-  <div className="absolute inset-1 rounded-[14px] border border-white/10 bg-black/10" />
-
-  <svg
-    className="relative h-7 w-7 text-white"
-    viewBox="0 0 48 48"
-    fill="none"
-    aria-hidden="true"
-  >
-    <path
-      d="M24 4.8 40.6 14.4v19.2L24 43.2 7.4 33.6V14.4L24 4.8Z"
-      stroke="currentColor"
-      strokeWidth="2.6"
-      strokeLinejoin="round"
-    />
-
-    <path
-      d="M17.2 24c0-3.75 3.05-6.8 6.8-6.8h4.9"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="round"
-    />
-
-    <path
-      d="M30.8 24c0 3.75-3.05 6.8-6.8 6.8h-4.9"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="round"
-    />
-
-    <path
-      d="M19.1 30.8 14.6 24l4.5-6.8"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-
-    <path
-      d="M28.9 17.2 33.4 24l-4.5 6.8"
-      stroke="currentColor"
-      strokeWidth="3"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-
-    <circle cx="24" cy="24" r="2.6" fill="currentColor" />
-  </svg>
-</div>
+    <Image
+  src="/logo.svg"
+  alt="CKBind Logo"
+  width={44}
+  height={44}
+  className="h-11 w-11 object-contain"
+  priority
+/>
   );
 }

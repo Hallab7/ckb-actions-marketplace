@@ -3,7 +3,10 @@ import { NextRequest } from "next/server";
 
 export const runtime = "edge";
 
-export async function GET(_req: NextRequest) {
+export async function GET(req: NextRequest) {
+  const baseUrl = req.nextUrl.origin;
+  const logoUrl = `${baseUrl}/logo.png`;
+
   return new ImageResponse(
     (
       <div
@@ -20,55 +23,20 @@ export async function GET(_req: NextRequest) {
           position: "relative",
         }}
       >
-        {/* Logo mark */}
+        {/* Logo */}
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
             width: "80px",
             height: "80px",
-            borderRadius: "22px",
-            background: "linear-gradient(145deg, #2563eb, #06b6d4)",
-            boxShadow: "0 14px 34px rgba(37,99,235,0.4)",
+            borderRadius: "18px",
+            overflow: "hidden",
             marginBottom: "32px",
+            boxShadow: "0 14px 34px rgba(37,99,235,0.4)",
           }}
         >
-          <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
-            <path
-              d="M24 4.8 40.6 14.4v19.2L24 43.2 7.4 33.6V14.4L24 4.8Z"
-              stroke="white"
-              strokeWidth="2.6"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M17.2 24c0-3.75 3.05-6.8 6.8-6.8h4.9"
-              stroke="white"
-              strokeWidth="3"
-              strokeLinecap="round"
-            />
-            <path
-              d="M30.8 24c0 3.75-3.05 6.8-6.8 6.8h-4.9"
-              stroke="white"
-              strokeWidth="3"
-              strokeLinecap="round"
-            />
-            <path
-              d="M19.1 30.8 14.6 24l4.5-6.8"
-              stroke="white"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M28.9 17.2 33.4 24l-4.5 6.8"
-              stroke="white"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <circle cx="24" cy="24" r="2.6" fill="white" />
-          </svg>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={logoUrl} width="80" height="80" alt="logo" style={{ objectFit: "cover" }} />
         </div>
 
         {/* Title */}
