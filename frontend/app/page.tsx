@@ -149,7 +149,7 @@ export default function Home() {
   style={{
     borderColor: "var(--border)",
     background:
-      "linear-gradient(135deg, rgba(99,102,241,0.10), rgba(16,185,129,0.08)), var(--surface-muted)",
+  "linear-gradient(135deg, rgba(139,92,246,0.12), rgba(99,102,241,0.08)), var(--surface-muted)",
   }}
 >
   <h2 className="mb-2 text-lg font-bold text-primary">
