@@ -2,6 +2,28 @@ import Link from "next/link";
 import { Task, shannonsToCKB } from "@/lib/types";
 import { StatusBadge } from "./StatusBadge";
 
+function blocksToHuman(blocks: bigint): string {
+  const totalSeconds = Number(blocks) * 10;
+  const minutes = Math.floor(totalSeconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 0) {
+    const remHours = hours % 24;
+    const remMins = minutes % 60;
+    if (remHours === 0 && remMins === 0) return `${days}d`;
+    if (remMins === 0) return `${days}d ${remHours}h`;
+    if (remHours === 0) return `${days}d ${remMins}min`;
+    return `${days}d ${remHours}h ${remMins}min`;
+  }
+  if (hours > 0) {
+    const remMins = minutes % 60;
+    return remMins === 0 ? `${hours}h` : `${hours}h ${remMins}min`;
+  }
+  if (minutes > 0) return `${minutes}min`;
+  return `${totalSeconds}s`;
+}
+
 export function TaskCard({ task }: { task: Task }) {
   const id = `${task.outPoint.txHash}-${task.outPoint.index}`;
 
@@ -30,7 +52,7 @@ export function TaskCard({ task }: { task: Task }) {
             <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.7} d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
-            Block {task.deadline.toString()}
+            {blocksToHuman(task.deadline)}
           </div>
         </div>
       </div>

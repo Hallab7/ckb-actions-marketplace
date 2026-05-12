@@ -117,6 +117,11 @@ export default function PostPage() {
           <Field label="Deadline (block)" hint="Block number deadline">
             <input type="number" value={form.deadline} onChange={(e) => set("deadline", e.target.value)}
               placeholder="5000" min="1" className="input" required />
+            {form.deadline && Number(form.deadline) > 0 && (
+              <p className="mt-1.5 text-xs text-muted">
+                ≈ {blocksToHuman(Number(form.deadline))} from now
+              </p>
+            )}
           </Field>
         </div>
 
@@ -159,8 +164,8 @@ export default function PostPage() {
           {submitting
             ? "Sending transaction..."
             : !signerInfo?.signer
-            ? "Connect Wallet to Create"
-            : "Create Task & Lock Reward"}
+            ? "Connect Wallet"
+            : "Create Task"}
         </button>
       </form>
 
@@ -176,4 +181,28 @@ function Field({ label, hint, children }: { label: string; hint?: string; childr
       {hint && <p className="mt-1.5 text-xs text-muted">{hint}</p>}
     </div>
   );
+}
+
+// CKB produces ~1 block every 10 seconds
+function blocksToHuman(blocks: number): string {
+  const totalSeconds = blocks * 10;
+  const minutes = Math.floor(totalSeconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 0) {
+    const remHours = hours % 24;
+    const remMins = minutes % 60;
+    if (remHours === 0 && remMins === 0) return `${days}d`;
+    if (remMins === 0) return `${days}d ${remHours}h`;
+    if (remHours === 0) return `${days}d ${remMins}min`;
+    return `${days}d ${remHours}h ${remMins}min`;
+  }
+  if (hours > 0) {
+    const remMins = minutes % 60;
+    if (remMins === 0) return `${hours}h`;
+    return `${hours}h ${remMins}min`;
+  }
+  if (minutes > 0) return `${minutes}min`;
+  return `${totalSeconds}s`;
 }
