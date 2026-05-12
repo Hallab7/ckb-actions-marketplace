@@ -88,6 +88,10 @@ textarea {
   outline-color: var(--ring);
 }
 
+button {
+  cursor: pointer;
+}
+
 ::selection {
   background: rgba(168, 85, 247, 0.32);
 }

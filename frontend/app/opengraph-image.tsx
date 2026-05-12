@@ -1,10 +1,11 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const contentType = "image/png";
+export const alt = "CKB Actions Marketplace";
 export const size = { width: 1200, height: 630 };
+export const contentType = "image/png";
 
-export async function GET() {
+export default async function Image() {
   return new ImageResponse(
     (
       <div
@@ -20,7 +21,7 @@ export async function GET() {
           fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
         }}
       >
-        {/* Grid pattern overlay */}
+        {/* Grid pattern */}
         <div
           style={{
             position: "absolute",
@@ -46,11 +47,11 @@ export async function GET() {
           }}
         >
           <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
-            <path d="M24 4.8 40.6 14.4v19.2L24 43.2 7.4 33.6V14.4L24 4.8Z" stroke="white" strokeWidth="2.6" strokeLinejoin="round" />
-            <path d="M17.2 24c0-3.75 3.05-6.8 6.8-6.8h4.9" stroke="white" strokeWidth="3" strokeLinecap="round" />
-            <path d="M30.8 24c0 3.75-3.05 6.8-6.8 6.8h-4.9" stroke="white" strokeWidth="3" strokeLinecap="round" />
-            <path d="M19.1 30.8 14.6 24l4.5-6.8" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M28.9 17.2 33.4 24l-4.5 6.8" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M24 4.8 40.6 14.4v19.2L24 43.2 7.4 33.6V14.4L24 4.8Z" stroke="white" stroke-width="2.6" stroke-linejoin="round" />
+            <path d="M17.2 24c0-3.75 3.05-6.8 6.8-6.8h4.9" stroke="white" stroke-width="3" stroke-linecap="round" />
+            <path d="M30.8 24c0 3.75-3.05 6.8-6.8 6.8h-4.9" stroke="white" stroke-width="3" stroke-linecap="round" />
+            <path d="M19.1 30.8 14.6 24l4.5-6.8" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M28.9 17.2 33.4 24l-4.5 6.8" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
             <circle cx="24" cy="24" r="2.6" fill="white" />
           </svg>
         </div>
