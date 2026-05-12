@@ -21,6 +21,14 @@ export const metadata: Metadata = {
       "On-chain task board on Nervos CKB. Rewards escrowed in cells — no platform holds your funds.",
     url: BASE_URL,
     siteName: "CKB Actions Marketplace",
+    images: [
+      {
+        url: `${BASE_URL}/api/og`,
+        width: 1200,
+        height: 630,
+        alt: "CKB Actions Marketplace",
+      },
+    ],
     type: "website",
   },
   twitter: {
@@ -28,6 +36,7 @@ export const metadata: Metadata = {
     title: "CKB Actions Marketplace",
     description:
       "On-chain task board on Nervos CKB. Rewards escrowed in cells — no platform holds your funds.",
+    images: [`${BASE_URL}/api/og`],
   },
 };
 
