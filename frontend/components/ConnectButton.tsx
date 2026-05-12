@@ -31,7 +31,7 @@ export function ConnectButton() {
         </span>
         <button
           onClick={disconnect}
-          className="text-xs font-medium text-muted hover:text-primary"
+          className="text-xs font-medium text-red-500 hover:text-primary cursor-pointer"
         >
           Disconnect
         </button>

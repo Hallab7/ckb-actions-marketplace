@@ -3,9 +3,41 @@ import "./globals.css";
 import { Providers } from "./providers";
 import { Navbar } from "@/components/Navbar";
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: "CKBind | Actions Marketplace",
-  description: "Professional on-chain task dashboard powered by CKB",
+  title: "CKB Actions Marketplace",
+  description:
+    "On-chain task board on Nervos CKB. Post tasks, lock rewards in cells, get paid when work is done — no platform holds your funds.",
+  metadataBase: new URL(BASE_URL),
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
+  openGraph: {
+    title: "CKB Actions Marketplace",
+    description:
+      "On-chain task board on Nervos CKB. Rewards escrowed in cells — no platform holds your funds.",
+    url: BASE_URL,
+    siteName: "CKB Actions Marketplace",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "CKB Actions Marketplace",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CKB Actions Marketplace",
+    description:
+      "On-chain task board on Nervos CKB. Rewards escrowed in cells — no platform holds your funds.",
+    images: ["/opengraph-image"],
+  },
 };
 
 export default function RootLayout({
