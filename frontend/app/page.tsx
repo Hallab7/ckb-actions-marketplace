@@ -93,7 +93,7 @@ export default function Home() {
             placeholder="Search tasks..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="input pl-11"
+            className="input !pl-12"
           />
         </div>
         <div className="flex gap-1 overflow-x-auto rounded-2xl border p-1" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
@@ -144,15 +144,26 @@ export default function Home() {
         </div>
       )}
 
-      <div className="mt-12 rounded-[32px] border p-8 text-center" style={{ borderColor: "var(--border)", background: "linear-gradient(135deg, rgba(168,85,247,0.22), rgba(236,72,153,0.16)), var(--surface-muted)" }}>
-        <h2 className="mb-2 text-lg font-bold text-primary">Have a task to get done?</h2>
-        <p className="mb-5 text-sm text-secondary">
-          Create a task and lock your reward on-chain. Pay only when the work is done.
-        </p>
-        <Link href="/post" className="primary-button px-6 text-sm">
-          Create Task
-        </Link>
-      </div>
+     <div
+  className="mt-12 rounded-[32px] border p-8 text-center"
+  style={{
+    borderColor: "var(--border)",
+    background:
+      "linear-gradient(135deg, rgba(99,102,241,0.10), rgba(16,185,129,0.08)), var(--surface-muted)",
+  }}
+>
+  <h2 className="mb-2 text-lg font-bold text-primary">
+    Have a task to get done?
+  </h2>
+
+  <p className="mb-5 text-sm text-secondary">
+    Create a task and lock your reward on-chain. Pay only when the work is done.
+  </p>
+
+  <Link href="/post" className="primary-button px-6 text-sm">
+    Create Task
+  </Link>
+</div>
     </div>
   );
 }
