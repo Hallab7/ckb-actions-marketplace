@@ -7,6 +7,7 @@ import { useCcc } from "@ckb-ccc/connector-react";
 import { StatusBadge } from "@/components/StatusBadge";
 import { shannonsToCKB, TaskStatus } from "@/lib/types";
 import { useTask } from "@/hooks/useTask";
+import { blocksToHuman } from "@/lib/blocks";
 import {
   approveTask,
   cancelTask,
@@ -92,7 +93,8 @@ export default function TaskPage({ params }: { params: Promise<{ id: string }> }
           <div className="muted-card rounded-3xl p-4">
             <p className="mb-1 text-xs font-semibold uppercase tracking-[0.16em] text-muted">Deadline</p>
             <p className="text-2xl font-bold text-primary">
-              Block <span className="text-sm font-semibold text-muted">#{task.deadline.toString()}</span>
+              {blocksToHuman(task.deadline)}
+              {/* <span className="ml-1.5 text-sm font-semibold text-muted">from now</span> */}
             </p>
           </div>
         </div>

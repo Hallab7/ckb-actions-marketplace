@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCcc } from "@ckb-ccc/connector-react";
 import { postTask } from "@/lib/transactions";
+import { blocksToHuman } from "@/lib/blocks";
 
 export default function PostPage() {
   const router = useRouter();
   const { open, signerInfo } = useCcc();
+  const [myAddress, setMyAddress] = useState<string | null>(null);
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -18,6 +20,12 @@ export default function PostPage() {
   const [submitting, setSubmitting] = useState(false);
   const [txHash, setTxHash] = useState<string | null>(null);
   const [txError, setTxError] = useState<string | null>(null);
+
+  // Resolve connected address
+  useEffect(() => {
+    if (!signerInfo?.signer) { setMyAddress(null); return; }
+    signerInfo.signer.getRecommendedAddress().then(setMyAddress).catch(() => setMyAddress(null));
+  }, [signerInfo]);
 
   function set(key: string, value: string) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -119,15 +127,37 @@ export default function PostPage() {
               placeholder="5000" min="1" className="input" required />
             {form.deadline && Number(form.deadline) > 0 && (
               <p className="mt-1.5 text-xs text-muted">
-                ≈ {blocksToHuman(Number(form.deadline))} from now
+                ≈ {blocksToHuman(Number(form.deadline))}
               </p>
             )}
           </Field>
         </div>
 
         <Field label="Reviewer Address" hint="Who will approve or reject the submission">
-          <input type="text" value={form.reviewer} onChange={(e) => set("reviewer", e.target.value)}
-            placeholder="ckt1..." className="input font-mono text-xs" required />
+          <div className="relative">
+            <input
+              type="text"
+              value={form.reviewer}
+              onChange={(e) => set("reviewer", e.target.value)}
+              placeholder="ckt1..."
+              className="input pr-28 font-mono text-xs"
+              required
+            />
+            {myAddress && (
+              <button
+                type="button"
+                onClick={() => set("reviewer", myAddress)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full px-2.5 py-1 text-xs font-semibold transition-colors"
+                style={{
+                  background: "var(--surface-muted)",
+                  color: "var(--text-muted)",
+                  border: "1px solid var(--border)",
+                }}
+              >
+                Use mine
+              </button>
+            )}
+          </div>
         </Field>
 
         {isValid && (
@@ -140,7 +170,7 @@ export default function PostPage() {
               </div>
               <div className="flex justify-between">
                 <span>Deadline</span>
-                <span>Block #{form.deadline}</span>
+                <span>{blocksToHuman(Number(form.deadline))}</span>
               </div>
               <div className="flex justify-between">
                 <span>Reviewer</span>
@@ -181,28 +211,4 @@ function Field({ label, hint, children }: { label: string; hint?: string; childr
       {hint && <p className="mt-1.5 text-xs text-muted">{hint}</p>}
     </div>
   );
-}
-
-// CKB produces ~1 block every 10 seconds
-function blocksToHuman(blocks: number): string {
-  const totalSeconds = blocks * 10;
-  const minutes = Math.floor(totalSeconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-
-  if (days > 0) {
-    const remHours = hours % 24;
-    const remMins = minutes % 60;
-    if (remHours === 0 && remMins === 0) return `${days}d`;
-    if (remMins === 0) return `${days}d ${remHours}h`;
-    if (remHours === 0) return `${days}d ${remMins}min`;
-    return `${days}d ${remHours}h ${remMins}min`;
-  }
-  if (hours > 0) {
-    const remMins = minutes % 60;
-    if (remMins === 0) return `${hours}h`;
-    return `${hours}h ${remMins}min`;
-  }
-  if (minutes > 0) return `${minutes}min`;
-  return `${totalSeconds}s`;
 }
